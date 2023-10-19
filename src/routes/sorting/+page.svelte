@@ -49,6 +49,7 @@
         }
         currentStep = -1;
         currentSelected = -1;
+        isRunning = false;
     }
 
     async function selectionSort() {
@@ -69,6 +70,7 @@
         }
         currentStep = -1;
         currentSelected = -1;
+        isRunning = false;
     }
 
     async function insertionSort() {
@@ -92,6 +94,7 @@
 
         currentStep = -1;
         currentSelected = -1;
+        isRunning = false;
     }
 
     $: sizeChanged(size);
