@@ -60,22 +60,19 @@
 
         for (let i = 1; i < sortableArr.length; i++) {
             let j = i - 1;
-            let key = sortableArr[i].num;
-
-            while (j >= 0 && sortableArr[j].num > key) {
+            let key  = sortableArr[i].num;
+            while (j >= 0 && sortableArr[j].num > key ) {
                 currentStep = j;
                 currentSelected = j + 1;
+                await delay(speed);
                 sortableArr[j + 1] = sortableArr[j];
                 j--;
             }
-
             sortableArr[j + 1] = { num: key, id: sortableArr[j + 1].id };
-
             sortedArr = sortableArr.map((item: any) => item.num);
-            currentStep = -1;
-            currentSelected = -1;
-            await delay(speed);
         }
+        currentStep = -1;
+        currentSelected = -1;
     }
 
 
