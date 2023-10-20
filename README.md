@@ -88,4 +88,13 @@
 * Space complexity is O(n).
 
 ## Recommendation System
-* This system recommends algorithms based on the user's choice.
+### Collaborative Filtering:
+> Will not be implemented
+* This algorithm finds similar users based on their ratings and recommends items that they have rated highly.
+* It uses the Pearson correlation coefficient to measure the similarity between users.
+* It uses the weighted average of ratings to predict the ratings of items.
+
+### Content-Based Filtering:
+* This algorithm recommends items that are similar to the items that the user has liked in the past.
+* It uses the cosine similarity to measure the similarity between items.
+* It uses the weighted average of ratings to predict the ratings of items.
