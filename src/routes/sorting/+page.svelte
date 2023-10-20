@@ -6,8 +6,10 @@
     let speed: any = 1000;
     let currentStep: any;
     let currentSelected: any;
+    let currentPivot: any;
     let arr = generateUniqueRandomArray();
     let sortedArr: any;
+    let mergeArr: any[];
     let showValues: boolean = false;
     let isRunning: boolean = false;
 
@@ -30,6 +32,10 @@
             selectionSort();
         } else if (algorithm === "insertion") {
             insertionSort();
+        } else if (algorithm === "merge") {
+            mergeSort();
+        } else if (algorithm === "quick") {
+            quickSort();
         }
     }
 
@@ -97,6 +103,107 @@
         isRunning = false;
     }
 
+    async function mergeSort(arr = sortedArr, leftIndex = 0, rightIndex = arr.length - 1) {
+        if (leftIndex >= rightIndex) {
+            return [arr[leftIndex]];
+        }
+
+        const mid = Math.floor((leftIndex + rightIndex) / 2);
+        
+        // Recursively sort the left and right halves
+        const leftHalf: any = await mergeSort(arr, leftIndex, mid);
+        const rightHalf: any = await mergeSort(arr, mid + 1, rightIndex);
+
+        const mergedArray = [];
+        let leftIndexPointer = 0;
+        let rightIndexPointer = 0;
+
+        // Merge the sorted halves with a delay and visualization
+        while (leftIndexPointer < leftHalf.length && rightIndexPointer < rightHalf.length) {
+            if (leftHalf[leftIndexPointer] < rightHalf[rightIndexPointer]) {
+                mergedArray.push(leftHalf[leftIndexPointer]);
+                leftIndexPointer++;
+            } else {
+                mergedArray.push(rightHalf[rightIndexPointer]);
+                rightIndexPointer++;
+            }
+
+            // Visualize: Update currentStep and currentSelected
+            currentStep = leftIndex + leftIndexPointer + rightIndexPointer;
+            currentSelected = leftIndexPointer;
+            mergeArr = [...mergedArray];
+            await delay(speed); 
+        }
+
+        // Append the remaining elements (if any)
+        while (leftIndexPointer < leftHalf.length) {
+            mergedArray.push(leftHalf[leftIndexPointer]);
+            leftIndexPointer++;
+        }
+        while (rightIndexPointer < rightHalf.length) {
+            mergedArray.push(rightHalf[rightIndexPointer]);
+            rightIndexPointer++;
+        }
+
+        // Visualize: Highlight the merged result
+        for (let i = 0; i < mergedArray.length; i++) {
+            arr[leftIndex + i] = mergedArray[i];
+        }
+
+        // Visualize: Reset currentStep and currentSelected
+        sortedArr = [...arr];
+        mergeArr = [];
+        currentStep = -1;
+        currentSelected = -1;
+
+        return mergedArray;
+    }
+
+    async function quickSort(array = sortedArr, left = 0, right = array.length - 1) {
+        if (left >= right) {
+            return;
+        }
+
+        const pivotIndex = await partition(array, left, right);
+        await quickSort(array, left, pivotIndex - 1);
+        await quickSort(array, pivotIndex + 1, right);
+    }
+
+    async function partition(array: number[], left: number, right: number) {
+        const pivot = array[right];
+        let i = left - 1;
+        
+        for (let j = left; j < right; j++) {
+            // Visualize: Highlight elements being compared
+            currentSelected = j;
+            currentStep = right;
+            await delay(speed);
+
+            if (array[j] < pivot) {
+                i++;
+
+                // Visualize: Swap elements
+                await swap(array, i, j);
+            }
+        }
+
+        // Visualize: Swap the pivot into its correct position
+        await swap(array, i + 1, right);
+
+        // Visualize: Reset selected element and pivot
+        currentSelected = -1;
+        currentStep = -1;
+        currentPivot = -1;
+
+        return i + 1;
+    }
+
+    async function swap(array: number[], i: number, j: number) {
+        const temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+
     $: sizeChanged(size);
 </script>
 
@@ -108,13 +215,11 @@
                 style="margin-right: 1px;"
                 animate:flip={{ duration: 1000 }}
             >
-                <div
-                    class="flex items-center justify-center rounded"
-                    style="height: {25 + num}px; background-color: {i ===
-                        currentStep || i === currentSelected
-                        ? 'green'
-                        : 'white'}; width: {90 / sortedArr.length}vw;"
-                >
+            <div
+                class="flex items-center justify-center rounded"
+                style="height: {25 + num}px; background-color: {i === currentStep ? 'red' : i === currentSelected ? 'green' : 'white'}; width: {90 / sortedArr.length}vw;"
+            >
+        
                     <!-- {num} -->
                 </div>
                 {#if showValues}
@@ -123,6 +228,28 @@
             </div>
         {/each}
     </div>
+
+    {#if mergeArr}
+    <div class="flex flex-row overflow-x-auto h-48">
+        {#each mergeArr as num, i (num)}
+            <div
+                class="flex flex-col items-center"
+                style="margin-right: 1px;"
+                animate:flip={{ duration: 1000 }}
+            >
+                <div
+                    class="flex  rounded"
+                    style="height: {25 + num}px; background-color: orange; width: {90 / sortedArr.length}vw;"
+                >
+                </div>
+                {#if showValues}
+                    <span>{num}</span>
+                {/if}
+            </div>
+        {/each}
+    </div>
+    {/if}
+    
 
     <div class="flex mt-8">
         <button
@@ -139,6 +266,16 @@
             on:click={() => performAlgorithm("insertion")}
             disabled={isRunning}
             class="btn btn-primary mr-1">Insertion Sort</button
+        >
+        <button
+            on:click={() => performAlgorithm("merge")}
+            disabled={isRunning}
+            class="btn btn-primary mr-1">Merge Sort</button
+        >
+        <button
+            on:click={() => performAlgorithm("quick")}
+            disabled={isRunning}
+            class="btn btn-primary mr-1">Quick Sort</button
         >
         <button
             on:click={() => document.location.reload()}
