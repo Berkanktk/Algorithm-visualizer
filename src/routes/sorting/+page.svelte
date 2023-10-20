@@ -12,6 +12,50 @@
     let mergeArr: any[];
     let showValues: boolean = false;
     let isRunning: boolean = false;
+    let selectedAlgorithms: any[] = [
+        {
+            name: "Bubble Sort",
+            timeComplexity: "O(n^2)",
+            id: 1,
+        },
+        {
+            name: "Selection Sort",
+            timeComplexity: "O(n^2)",
+            id: 2,
+        },
+        {
+            name: "Insertion Sort",
+            timeComplexity: "O(n^2)",
+            id: 3,
+        },
+        {
+            name: "Merge Sort",
+            timeComplexity: "O(n log n)",
+            id: 4,
+        },
+        {
+            name: "Quick Sort",
+            timeComplexity: "O(n^2)",
+            id: 5,
+        },
+    ];  
+    let selected: any = "Bubble Sort";
+    let timeComplexity: string = ""; 
+
+    $: selectedAlgorithms; // This reactive statement will track changes to selectedSearch
+    $: selected; // This reactive statement will track changes to selectedSearch
+    $: {
+        // Update the time complexity whenever selected or selectedSearch changes
+        updateTimeComplexity();
+    }
+
+    // A function to update the time complexity based on the selected algorithm
+    function updateTimeComplexity() {
+        const selectedAlgorithm = selectedAlgorithms.find((item: any) => item.name === selected);
+        if (selectedAlgorithm) {
+            timeComplexity = selectedAlgorithm.timeComplexity;
+        }
+    }
 
     function handleToggle() {
         showValues = !showValues;
@@ -22,19 +66,19 @@
         sortedArr = [...arr];
     }
 
-    function performAlgorithm(algorithm: string) {
+    function performAlgorithm() {
         sortedArr = [...arr];
         isRunning = true;
 
-        if (algorithm === "bubble") {
+        if (selected === "Bubble Sort") {
             bubbleSort();
-        } else if (algorithm === "selection") {
+        } else if (selected === "Selection Sort") {
             selectionSort();
-        } else if (algorithm === "insertion") {
+        } else if (selected === "Insertion Sort") {
             insertionSort();
-        } else if (algorithm === "merge") {
+        } else if (selected === "Merge Sort") {
             mergeSort();
-        } else if (algorithm === "quick") {
+        } else if (selected === "Quick Sort") {
             quickSort();
         }
     }
@@ -215,13 +259,15 @@
                 style="margin-right: 1px;"
                 animate:flip={{ duration: 1000 }}
             >
-            <div
-                class="flex items-center justify-center rounded"
-                style="height: {25 + num}px; background-color: {i === currentStep ? 'red' : i === currentSelected ? 'green' : 'white'}; width: {90 / sortedArr.length}vw;"
-            >
-        
-                    <!-- {num} -->
-                </div>
+                <div
+                    class="flex items-center justify-center rounded"
+                    style="height: {25 + num}px; background-color: {i ===
+                    currentStep
+                        ? 'red'
+                        : i === currentSelected
+                        ? 'green'
+                        : 'white'}; width: {90 / sortedArr.length}vw;"
+                />
                 {#if showValues}
                     <span>{num}</span>
                 {/if}
@@ -230,58 +276,48 @@
     </div>
 
     {#if mergeArr}
-    <div class="flex flex-row overflow-x-auto h-48">
-        {#each mergeArr as num, i (num)}
-            <div
-                class="flex flex-col items-center"
-                style="margin-right: 1px;"
-                animate:flip={{ duration: 1000 }}
-            >
+        <div class="flex flex-row overflow-x-auto h-48">
+            {#each mergeArr as num, i (num)}
                 <div
-                    class="flex  rounded"
-                    style="height: {25 + num}px; background-color: orange; width: {90 / sortedArr.length}vw;"
+                    class="flex flex-col items-center"
+                    style="margin-right: 1px;"
+                    animate:flip={{ duration: 1000 }}
                 >
+                    <div
+                        class="flex rounded"
+                        style="height: {25 + num}px; background-color: orange; width: {90 / sortedArr.length}vw;"
+                    />
+                    {#if showValues}
+                        <span>{num}</span>
+                    {/if}
                 </div>
-                {#if showValues}
-                    <span>{num}</span>
-                {/if}
-            </div>
-        {/each}
-    </div>
+            {/each}
+        </div>
     {/if}
-    
 
-    <div class="flex mt-8">
+    <div class="top-0 left-0 right-0 text-center mb-12">
+        <h1 class="text-5xl font-bold text-center mt-6">Sorting Algorithms</h1>
+        <h2 class="text-3xl font-bold mb-4 text-center mt-8">Time Complexity:</h2>
+        <span class="text-red-600 text-3xl font-bold text-center">{timeComplexity}</span>
+    </div>
+
+    <div class="flex space-x-2">
+        <select class="p-2 rounded-md border" bind:value={selected} on:change={updateTimeComplexity}>
+            {#each selectedAlgorithms as item, i (i)}
+                <option value={item.name}>{item.name}</option>
+            {/each}
+        </select>
+
         <button
-            on:click={() => performAlgorithm("bubble")}
-            disabled={isRunning}
-            class="btn btn-primary mr-1">Bubble Sort</button
-        >
-        <button
-            on:click={() => performAlgorithm("selection")}
-            disabled={isRunning}
-            class="btn btn-primary mr-1">Selection Sort</button
-        >
-        <button
-            on:click={() => performAlgorithm("insertion")}
-            disabled={isRunning}
-            class="btn btn-primary mr-1">Insertion Sort</button
-        >
-        <button
-            on:click={() => performAlgorithm("merge")}
-            disabled={isRunning}
-            class="btn btn-primary mr-1">Merge Sort</button
-        >
-        <button
-            on:click={() => performAlgorithm("quick")}
-            disabled={isRunning}
-            class="btn btn-primary mr-1">Quick Sort</button
+            class="p-2 btn btn-primary rounded-md"
+            on:click={performAlgorithm}>Sort</button
         >
         <button
             on:click={() => document.location.reload()}
             class="btn btn-secondary mr-1">Reset</button
         >
     </div>
+
     <input
         type="range"
         min="1"
