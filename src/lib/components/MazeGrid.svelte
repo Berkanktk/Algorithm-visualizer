@@ -5,7 +5,7 @@
     export let isEnd: (cell: App.Cell) => boolean;
 </script>
 
-<div class="maze">
+<div class="maze justify-center">
     {#each grid as row}
         {#each row as cell}
             <div
