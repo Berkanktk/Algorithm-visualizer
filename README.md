@@ -71,8 +71,8 @@ This repository contains a dynamic and interactive visualizer for a wide array o
 
 ## Searching Algorithms
 <div style="display:flex; justify-content:center;" align="center">
-  <img src="static/assets/screenshots/linear.gif" width="350">
-  <img src="static/assets/screenshots/binary.gif" width="350" style="margin-left: 4px;">
+  <img src="static/assets/screenshots/linear.gif" alt="Linear Sort" width="350">
+  <img src="static/assets/screenshots/binary.gif" alt="Binary Sort" width="350" style="margin-left: 4px;">
 </div>
 
 ###  Linear Search (Sequential Search)
@@ -97,7 +97,8 @@ This repository contains a dynamic and interactive visualizer for a wide array o
 * Time complexity is O(log n) in the worst case.
 
 ## Maze Generation Algorithms
-![Maze-gen](static/assets/screenshots/maze-gen.gif)
+<img src="static/assets/screenshots/maze-gen.gif" alt="Maze Generation">
+
 ### Binary Tree Algorithm
 * Complexity: Simplest
 * This algorithm creates a maze by repeatedly carving passages either to the north or to the east.
@@ -125,7 +126,8 @@ This repository contains a dynamic and interactive visualizer for a wide array o
 * It then performs a random walk, carving passages to unvisited cells until it reaches a dead end.
 
 ## Pathfinding Algorithms
-![Pathfinding](static/assets/screenshots/pathfinding.gif)
+<img src="static/assets/screenshots/pathfinding.gif" alt="Pathfinding">
+
 ### Dijkstra's Algorithm
 * This algorithm finds the shortest path between two nodes in a graph.
 * It uses a priority queue to keep track of the next node to visit.
@@ -146,7 +148,7 @@ This repository contains a dynamic and interactive visualizer for a wide array o
 
 ## Data Structures
 <div style="display:flex; justify-content:center;" align="center">
-  <img src="static/assets/screenshots/data-structures.png" width="300">
+  <img src="static/assets/screenshots/data-structures.png" alt="Data Structures" width="300">
 </div>
 
 ### Stack
@@ -171,7 +173,8 @@ This repository contains a dynamic and interactive visualizer for a wide array o
 * Space complexity is O(n).
 
 ## Recommendation System
-![Recommendation System](static/assets/screenshots/Recommendation.png)
+<img src="static/assets/screenshots/Recommendation" alt="Recommendation System">
+
 ### Collaborative Filtering
 > Will not be implemented
 * This algorithm finds similar users based on their ratings and recommends items that they have rated highly.
