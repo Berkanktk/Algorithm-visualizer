@@ -52,6 +52,8 @@ export async function aStar(grid: App.Cell[][], rows: number, cols: number, isIn
         if (!isInstant) {
             await delay(delayTime);
             updateFn(grid.map(row => [...row]));
+        } else {
+            updateFn(grid.map(row => [...row]));
         }
     }
 
