@@ -12,3 +12,7 @@ export function generateUniqueRandomArray(size: number = 30) {
     
     return Array.from(uniqueSet);
 }
+
+export function clearGrid(): void {
+    document.location.reload();
+}
