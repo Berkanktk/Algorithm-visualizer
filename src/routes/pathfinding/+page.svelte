@@ -1,6 +1,4 @@
 <script lang="ts">
-    let disabled: boolean = false;
-
     type Cell = {
         visited: boolean;
         walls: boolean[];
@@ -11,6 +9,8 @@
     const cols: number = 20;
     let grid: Cell[][] = [];
     let stack: Cell[] = [];
+    let disabled: boolean = false;
+    let isFinished: boolean = false;
 
     // Initialize grid
     for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
@@ -25,6 +25,14 @@
         grid.push(row);
     }
 
+    function isStart(cell: Cell): boolean {
+        return cell.position[0] === 0 && cell.position[1] === 0;
+    }
+
+    function isEnd(cell: Cell): boolean {
+        return cell.position[0] === rows - 1 && cell.position[1] === cols - 1;
+    }
+
     // Promise-based setTimeout
     function delay(ms: number): Promise<void> {
         return new Promise((resolve) => setTimeout(resolve, ms));
@@ -32,6 +40,7 @@
 
     // DFS algorithm to generate maze
     async function generateMaze(): Promise<void> {
+        isFinished = false;
         disabled = true;
         let current: Cell = grid[0][0];
         current.visited = true;
@@ -45,12 +54,19 @@
                 removeWalls(current, next);
                 stack.push(current);
                 current = next;
-                await delay(50);
+                // await delay(50);
                 grid = [...grid];
             } else if (stack.length > 0) {
                 current = stack.pop()!;
             }
         }
+
+        // Remove the entrance and exit walls in the generated maze
+        grid[0][0].walls[0] = false;
+        grid[rows - 1][19].walls[2] = false;
+        grid = [...grid];
+        disabled = false;
+        isFinished = true;
     }
 
     // Find a random unvisited neighbor
@@ -118,12 +134,7 @@
         {#each grid as row}
             {#each row as cell}
                 <div
-                    class="cell {cell.walls[0] ? '' : 'no-top'} {cell.walls[1]
-                        ? ''
-                        : 'no-right'} {cell.walls[2] ? '' : 'no-bottom'} {cell
-                        .walls[3]
-                        ? ''
-                        : 'no-left'}"
+                class="cell {cell.walls[0] ? '' : 'no-top'} {cell.walls[1] ? '' : 'no-right'} {cell.walls[2] ? '' : 'no-bottom'} {cell.walls[3] ? '' : 'no-left'} {isStart(cell) && isFinished ? 'start' : ''} {isEnd(cell) && isFinished? 'end' : ''}"
                 />
             {/each}
         {/each}
@@ -158,5 +169,13 @@
 
     .no-left {
         border-left: none;
+    }
+
+    .start:nth-child(1) {
+        background-color: green;
+    }
+
+    .end:nth-child(400) {
+        background-color: red;
     }
 </style>
