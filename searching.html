@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="./favicon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.338c3f43.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.be89b243.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/scheduler.0f962ddd.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/singletons.28116853.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/paths.c5704ad5.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.343ec5d6.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/index.5aa1e1f3.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.d41a0393.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/6.3b172699.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/each.c7f25d96.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/helpers.2416c1ae.js">
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">  <div class="min-h-screen flex flex-col"><div class="flex flex-col mx-auto gap-y-8 items-center h-screen justify-center relative"><div class="absolute top-0 left-0 right-0 text-center"><h1 class="text-5xl font-bold text-center mt-6" data-svelte-h="svelte-16utzus">Searching Algorithms</h1> <h2 class="text-3xl font-bold mb-4 text-center mt-16" data-svelte-h="svelte-1ursuvo">Time Complexity:</h2> <span class="text-red-600 text-4xl font-bold text-center">O(n)</span></div> <div class="flex flex-col w-1/2"><div class="flex flex-wrap justify-center"><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Apple</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Banana</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Cherry</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Durian</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Elderberry</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Fig</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Grape</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Honeydew</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Ice Cream Bean</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Jackfruit</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Kiwi</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Lemon</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Mango</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Nectarine</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Orange</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Papaya</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Quince</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Raspberry</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Strawberry</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Tangerine</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Ugli Fruit</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Vanilla Bean</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Watermelon</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Xigua</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Yuzu</div><div class="bg-gray-600 p-2 m-1 rounded-md" style="background-color: ;">Zucchini</div></div></div> <div class="flex space-x-2 "><input type="text" class="p-2 rounded-md border w-80" placeholder="Enter item"> <div class="flex space-x-2"><button class="p-2 btn btn-primary rounded-md" data-svelte-h="svelte-15ib2ux">Add</button> <button class="p-2 btn btn-primary rounded-md" data-svelte-h="svelte-1p345ra">Clear</button> <button class="p-2 btn btn-secondary rounded-md" data-svelte-h="svelte-sqtej4">Remove</button></div></div> <div class="flex space-x-2"><input type="text" class="p-2 rounded-md border " placeholder="Search Term"> <select class="p-2 rounded-md border"><option value="Linear Search">Linear Search</option><option value="Binary Search">Binary Search</option><option value="Jump Search">Jump Search</option><option value="Exponential Search">Exponential Search</option></select> <button class="p-2 btn btn-primary rounded-md" data-svelte-h="svelte-1luana8">Search</button> <button class="p-2 btn btn-secondary rounded-md" data-svelte-h="svelte-aol77o">Reset</button></div> <span>Total Steps: <span style="color: red;">Not running</span></span></div></div> 
+			
+			<script>
+				{
+					__sveltekit_gsv8mu = {
+						assets: "/Algorithm-visualizer",
+						base: new URL(".", location).pathname.slice(0, -1),
+						env: {}
+					};
+
+					const element = document.currentScript.parentElement;
+
+					const data = [null,null];
+
+					Promise.all([
+						import("./_app/immutable/entry/start.be89b243.js"),
+						import("./_app/immutable/entry/app.343ec5d6.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 6],
+							data,
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

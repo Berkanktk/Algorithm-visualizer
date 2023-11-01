@@ -1,0 +1,1 @@
+async function r(n){return new Promise(e=>setTimeout(e,n))}function a(n=30){const e=new Set;for(;e.size<n;){const o=Math.floor(Math.random()*100);e.add(o)}return Array.from(e)}function t(){document.location.reload()}export{t as c,r as d,a as g};
