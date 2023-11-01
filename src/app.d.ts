@@ -6,6 +6,22 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface Platform {}
+		interface Cell {
+			visited: boolean;
+			searched: boolean;
+			lastChecked: boolean; 
+			walls: boolean[];
+			position: [number, number];
+		};
+	
+		interface Node {
+			cell: Cell;
+			parent: Node | null;
+			g: number;
+			h: number;
+			f: number;
+			pathChangeCounter: number; 
+		};
 	}
 }
 
