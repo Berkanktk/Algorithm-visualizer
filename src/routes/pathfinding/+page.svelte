@@ -57,9 +57,11 @@
 </script>
 
 <div class="justify-center align-middle mx-auto text-center mt-16">
-    <h1 class="text-4xl font-bold mb-8">Pathfinding Visualizer</h1>
+    <h1 class="text-4xl font-bold mb-4">Pathfinding Visualizer</h1>
+    <span class="text-sm text-gray-600 block">DFS for Maze generation and A* for pathfinding is currently used.</span>
+    <span class="text-sm text-gray-600 mb-8">Additional algorithms will be implemented for both of them in the future.</span>
 
-    <div>
+    <div class="mt-8">
         <button
             class="btn btn-primary"
             on:click={handleMazeGeneration}
@@ -71,7 +73,7 @@
             disabled={!isFinished}>Solve Maze</button
         >
 
-        <div class="form-control mt-8">
+        <div class="form-control my-4">
             <label class="label cursor-pointer justify-center">
                 <span class="label-text">No Animation</span>
                 <input
@@ -92,4 +94,5 @@
             >Reset Maze</button
         >
     </div>
+
 </div>
