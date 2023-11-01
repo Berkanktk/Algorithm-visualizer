@@ -9,8 +9,10 @@
     let newItemLinkedList: any;
 
     function enqueue() {
-      queue = [...queue, newItemQueue];
-      newItemQueue = "";
+      if (newItemQueue.length > 0 && newItemQueue !== "") {
+        queue = [...queue, newItemQueue];
+        newItemQueue = "";
+      }
     }
 
     function dequeue() {
@@ -19,8 +21,10 @@
     }
 
     function push() {
-      stack = [...stack, newItemStack];
-      newItemStack = "";
+      if (newItemStack.length > 0 && newItemStack !== "") {
+        stack = [...stack, newItemStack];
+        newItemStack = "";
+      }
     }
 
     function pop() {
@@ -29,8 +33,10 @@
     }
 
     function insert() {
-      linkedList = [...linkedList, newItemLinkedList];
-      newItemLinkedList = "";
+      if (newItemLinkedList.length > 0 && newItemLinkedList !== "") {
+        linkedList = [...linkedList, newItemLinkedList];
+        newItemLinkedList = "";
+      }
     }
 
     function remove() {
@@ -41,7 +47,9 @@
 
   </script>
   
-  <div class="p-4 border rounded-lg">
+  <div class="p-4 rounded-lg">
+    <h1 class="text-4xl font-bold mb-4">Data Structures Visualizer</h1>
+
     <h2 class="text-xl font-semibold mb-2">Queue Visualizer</h2>
     <div class="space-x-2 flex">
       {#each queue as item, i (i)}

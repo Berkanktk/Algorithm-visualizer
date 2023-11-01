@@ -285,6 +285,10 @@
             class="range w-auto mt-8"
         />
         <p>Speed: {speed}ms</p>
+
+        {#if speed <= 300}
+            <p class="text-red-600 text-sm mt-1">Animation is turned off.</p>
+        {/if}
     
         <input
             bind:value={size}
@@ -315,7 +319,7 @@
                 <div
                     class="flex flex-col items-center"
                     style="margin-right: 1px;"
-                    animate:flip={{ duration: 1000 }}
+                    animate:flip={speed <= 300 ? { duration: 0 } : { duration: 1000 }}
                 >
                     <div
                         class="flex items-center justify-center rounded"
