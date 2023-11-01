@@ -1,7 +1,8 @@
 <script lang="ts">
     type Cell = {
         visited: boolean;
-        searched: boolean; 
+        searched: boolean;
+        lastChecked: boolean; 
         walls: boolean[];
         position: [number, number];
     };
@@ -12,6 +13,7 @@
         g: number;
         h: number;
         f: number;
+        pathChangeCounter: number; 
     };
 
     const rows: number = 20;
@@ -28,7 +30,8 @@
         for (let colIndex = 0; colIndex < cols; colIndex++) {
             row.push({
                 visited: false,
-                searched: false, // Initialize to false
+                searched: false,
+                lastChecked: false,
                 walls: [true, true, true, true],
                 position: [rowIndex, colIndex],
             });
@@ -139,10 +142,11 @@
         }
     }
 
-    async function solveMaze(): Promise<void> {
+    async function aStar(): Promise<void> {
         // Initialize the open and closed list
         let openList: Node[] = [];
         let closedList: Set<Cell> = new Set();
+        let lastPathChangeNode: Node | null = null;
 
         // Heuristic function (Manhattan distance)
         const heuristic = (cell: Cell): number => {
@@ -156,6 +160,7 @@
         let startNode: Node = {
             cell: grid[0][0],
             parent: null,
+            pathChangeCounter: 0, 
             g: 0,
             h: heuristic(grid[0][0]),
             f: heuristic(grid[0][0]),
@@ -172,6 +177,17 @@
             openList = openList.filter((n) => n !== currentNode);
             closedList.add(currentNode.cell);
             currentNode.cell.searched = true; // Mark as searched
+
+            // Check if the path changed
+            if (
+                lastPathChangeNode &&
+                lastPathChangeNode.pathChangeCounter !==
+                    currentNode.pathChangeCounter
+            ) {
+                // Mark the last cell in the previous path
+                lastPathChangeNode.cell.lastChecked = true;
+            }
+            lastPathChangeNode = currentNode;
 
             // Found the goal
             if (currentNode.cell === goalNode) {
@@ -209,10 +225,10 @@
                 // Make sure walkable terrain
                 let neighborCell = grid[newRow][newCol];
                 if (
-                    (currentNode.cell.walls[0] && dy === -1) || 
-                    (currentNode.cell.walls[1] && dx === 1) || 
-                    (currentNode.cell.walls[2] && dy === 1) || 
-                    (currentNode.cell.walls[3] && dx === -1) 
+                    (currentNode.cell.walls[0] && dy === -1) ||
+                    (currentNode.cell.walls[1] && dx === 1) ||
+                    (currentNode.cell.walls[2] && dy === 1) ||
+                    (currentNode.cell.walls[3] && dx === -1)
                 ) {
                     continue;
                 }
@@ -221,6 +237,7 @@
                 let newNode: Node = {
                     cell: neighborCell,
                     parent: currentNode,
+                    pathChangeCounter: currentNode.pathChangeCounter + 1,
                     g: currentNode.g + 1,
                     h: heuristic(neighborCell),
                     f: currentNode.g + 1 + heuristic(neighborCell),
@@ -257,20 +274,18 @@
             on:click={generateMaze}
             disabled={isFinished}>Generate Maze</button
         >
-        <button
-            class="btn btn-primary"
-            on:click={solveMaze}
-            disabled={!isFinished}>Solve Maze</button
+        <button class="btn btn-primary" on:click={aStar} disabled={!isFinished}
+            >Solve Maze</button
         >
 
         <div class="form-control mt-8">
             <label class="label cursor-pointer justify-center">
                 <span class="label-text">No Animation</span>
                 <input
-                name="instant"
-                type="checkbox"
-                bind:checked={isInstant}
-                class="toggle toggle-accent ml-4"
+                    name="instant"
+                    type="checkbox"
+                    bind:checked={isInstant}
+                    class="toggle toggle-accent ml-4"
                 />
             </label>
         </div>
@@ -289,7 +304,9 @@
                         ? 'start'
                         : ''} {isEnd(cell) && isFinished
                         ? 'end'
-                        : ''} {cell.searched ? 'searched' : ''}"
+                        : ''} {cell.searched
+                        ? 'searched'
+                        : ''} {cell.lastChecked ? 'last-checked' : ''}"
                 />
             {/each}
         {/each}
@@ -341,6 +358,10 @@
     }
 
     .searched {
-        background-color: lightcoral;
+        background-color: blue;
+    }
+
+    .last-checked {
+        background-color: lightcoral
     }
 </style>
