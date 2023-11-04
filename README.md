@@ -173,7 +173,7 @@ This repository contains a dynamic and interactive visualizer for a wide array o
 * Space complexity is O(n).
 
 ## Recommendation System
-<img src="static/assets/screenshots/Recommendation" alt="Recommendation System">
+<img src="static/assets/screenshots/Recommendation.png" alt="Recommendation System">
 
 ### Collaborative Filtering
 > Will not be implemented
