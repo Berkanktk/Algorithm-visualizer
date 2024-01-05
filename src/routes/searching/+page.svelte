@@ -1,5 +1,6 @@
 <script lang="ts">
     import { delay } from "$lib/helpers";
+    import { text } from "@sveltejs/kit";
 
     let data = ["Apple" , "Banana" , "Cherry" , "Durian" , "Elderberry" , "Fig" , "Grape" , "Honeydew" , "Ice Cream Bean" , "Jackfruit" , "Kiwi" , "Lemon" , "Mango" , "Nectarine" , "Orange" , "Papaya" , "Quince" , "Raspberry" , "Strawberry" , "Tangerine" , "Ugli Fruit" , "Vanilla Bean" , "Watermelon" , "Xigua" , "Yuzu" , "Zucchini"];
 
@@ -56,6 +57,10 @@
     }
 
     function addToList() {
+        if (textArea == "" || textArea == null) {
+            return;
+        }
+        
         data = [...data, textArea];
         textArea = "";
     }
